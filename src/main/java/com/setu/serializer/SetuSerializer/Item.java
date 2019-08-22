@@ -6,15 +6,20 @@ public class Item {
     Discount discount;
     String displayName;
     Fee[] fees;
-    SubAggregate[] itemAggregates;
+    SubAggregate itemAggregates;
     MeasurementUnit measurementUnit;
     int quantity;
     Tax tax;
     Amount unitPrice;
 
-    public Item(String displayName, SubAggregate[] itemAggregates) {
+    public Item(String displayName, SubAggregate itemAggregates) {
         this.displayName = displayName;
         this.itemAggregates = itemAggregates;
+    }
+
+    public Item(String displayName, Amount amount) {
+        this.displayName = displayName;
+        this.itemAggregates = new SubAggregate(amount);
     }
 
     public String getCode() {
@@ -57,11 +62,11 @@ public class Item {
         this.fees = fees;
     }
 
-    public SubAggregate[] getItemAggregates() {
+    public SubAggregate getItemAggregates() {
         return itemAggregates;
     }
 
-    public void setItemAggregates(SubAggregate[] itemAggregates) {
+    public void setItemAggregates(SubAggregate itemAggregates) {
         this.itemAggregates = itemAggregates;
     }
 

@@ -4,14 +4,19 @@ public class Fee {
     String description;
     Discount discount;
     String displayName;
-    SubAggregate[] feeAggregates;
+    SubAggregate feeAggregates;
     int quantity;
     Tax tax;
     Amount unitCost;
 
-    public Fee(String displayName, SubAggregate[] feeAggregates) {
+    public Fee(String displayName, SubAggregate feeAggregates) {
         this.displayName = displayName;
         this.feeAggregates = feeAggregates;
+    }
+
+    public Fee(String displayName, Amount amount) {
+        this.displayName = displayName;
+        this.feeAggregates = new SubAggregate(amount);
     }
 
     public String getDescription() {
@@ -38,11 +43,11 @@ public class Fee {
         this.displayName = displayName;
     }
 
-    public SubAggregate[] getFeeAggregates() {
+    public SubAggregate getFeeAggregates() {
         return feeAggregates;
     }
 
-    public void setFeeAggregates(SubAggregate[] feeAggregates) {
+    public void setFeeAggregates(SubAggregate feeAggregates) {
         this.feeAggregates = feeAggregates;
     }
 

@@ -40,7 +40,7 @@ public class FetchCustomerBillsResponse {
     }
 
 
-    public String printJson() throws JsonProcessingException {
+    public String convertToJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);

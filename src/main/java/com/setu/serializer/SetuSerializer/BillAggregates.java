@@ -6,7 +6,7 @@ public class BillAggregates {
     Tax tax;
     Discount discount;
     ItemQuantity itemQuantity;
-    Fee[] fees;
+    BillAggFees fees;
 
     public BillAggregates(AmountWithName total) {
         this.total = total;
@@ -59,11 +59,15 @@ public class BillAggregates {
         this.itemQuantity = itemQuantity;
     }
 
-    public Fee[] getFees() {
+    public BillAggFees getFees() {
         return fees;
     }
 
-    public void setFees(Fee[] fees) {
+    public void setFees(BillAggFees fees) {
         this.fees = fees;
+    }
+
+    public void setBillFees(Fee[] billFees){
+        this.fees = new BillAggFees(billFees);
     }
 }
