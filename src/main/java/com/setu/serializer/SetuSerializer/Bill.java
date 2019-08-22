@@ -1,28 +1,41 @@
 package com.setu.serializer.SetuSerializer;
+import java.time.ZonedDateTime;
 
-import java.time.LocalDateTime;
-
-enum BillExactness {
-    EXACT, EXACT_UP, EXACT_DOWN, ANY
-}
-
-enum Recurrence {
-    ONE_TIME, DAILY, WEEKLY, FORTNIGHTLY, MONTHLY, QUATERLY, HALF_YEARLY, YEARLY, AS_PRESENTED
-}
 
 public class Bill {
     BillAggregates billAggregates;
     BillExactness billExactness;
-    LocalDateTime billGeneratedOn;
+    ZonedDateTime billGeneratedOn;
+    ZonedDateTime billDueDate;
     String billerBillID;
     CustomerAccount customerAccount;
     Recurrence recurrence;
+    Item[] items;
 
-    public LocalDateTime getBillGeneratedOn() {
+    public Bill(BillAggregates billAggregates, BillExactness billExactness, ZonedDateTime billGeneratedOn,
+                String billerBillID, CustomerAccount customerAccount, Recurrence recurrence) {
+        this.billAggregates = billAggregates;
+        this.billExactness = billExactness;
+        this.billGeneratedOn = billGeneratedOn;
+        this.billerBillID = billerBillID;
+        this.customerAccount = customerAccount;
+        this.recurrence = recurrence;
+    }
+
+    public ZonedDateTime getBillDueDate() {
+        return billDueDate;
+    }
+
+    public void setBillDueDate(ZonedDateTime billDueDate) {
+        this.billDueDate = billDueDate;
+    }
+
+
+    public ZonedDateTime getBillGeneratedOn() {
         return billGeneratedOn;
     }
 
-    public void setBillGeneratedOn(LocalDateTime billGeneratedOn) {
+    public void setBillGeneratedOn(ZonedDateTime billGeneratedOn) {
         this.billGeneratedOn = billGeneratedOn;
     }
 
@@ -50,14 +63,6 @@ public class Bill {
         this.recurrence = recurrence;
     }
 
-    public Bill(BillAggregates billAggregates, BillExactness billExactness) {
-        this.billAggregates = billAggregates;
-        this.billExactness = billExactness;
-    }
-
-    public Bill() {
-    }
-
     public BillAggregates getBillAggregates() {
         return billAggregates;
     }
@@ -74,4 +79,11 @@ public class Bill {
         this.billExactness = billExactness;
     }
 
+    public Item[] getItems() {
+        return items;
+    }
+
+    public void setItems(Item[] items) {
+        this.items = items;
+    }
 }

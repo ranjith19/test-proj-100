@@ -3,33 +3,43 @@ package com.setu.serializer.SetuSerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public class BillSerializer {
-    public static void main(String[] a)  {
+
+
+    public static void main(String[] a) throws JsonProcessingException {
 
         AmountWithName total = new AmountWithName(new Amount(2000), "total");
         AmountWithName subtotal = new AmountWithName(new Amount(1000), "sub total");
+        ZoneId zoneId = ZoneId.of( "UTC" );
+        ZonedDateTime genDate = LocalDateTime.of(2019, 9, 10, 13, 12, 0).atZone(zoneId);
+        ZonedDateTime dueDate = LocalDateTime.of(2019, 10, 10, 0, 0, 0).atZone(zoneId);
         BillAggregates billAggregates = new BillAggregates(total, subtotal);
+        CustomerAccount customerAccount = new CustomerAccount("10000");
 
-        Bill bharatBill = new Bill(billAggregates, BillExactness.EXACT_UP);
-        bharatBill.setRecurrence(Recurrence.MONTHLY);
-        bharatBill.setCustomerAccount(new CustomerAccount("ranjith"));
+        String billId = "bill10122";
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        Bill bill = new Bill(billAggregates, BillExactness.EXACT_UP, genDate, billId, customerAccount,
+                Recurrence.MONTHLY);
+        bill.setBillDueDate(dueDate);
 
-        try {
+        Bill[] bills = new Bill[1];
+        bills[0] = bill;
 
-            String jsonStr = mapper.writeValueAsString(bharatBill);
+        BillDetails billDetails = new BillDetails(BillFetchStatus.AVAILABLE, bills);
+        Customer customer = new Customer("Ramesh");
 
-            // Displaying JSON String
-            System.out.println("#########");
-            System.out.println(jsonStr);
-            System.out.println("#########");
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
+        FetchBillsDataObject fbData = new FetchBillsDataObject(customer, billDetails);
+        FetchCustomerBillsResponse fcbResponse = new FetchCustomerBillsResponse(fbData);
+        String jsonStr = fcbResponse.printJson();
+        System.out.println("#########");
+        System.out.println(jsonStr);
+        System.out.println("#########");
 
     }
 }

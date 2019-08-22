@@ -2,11 +2,11 @@ package com.setu.serializer.SetuSerializer;
 
 public class Amount {
     int value;
-    String currency;
+    CurrencyCode currencyCode;
 
-    public Amount(int value, String currency) {
+    public Amount(int value, CurrencyCode currencyCode) {
         this.value = value;
-        this.currency = currency;
+        this.currencyCode = currencyCode;
     }
 
     public Amount(int value) {
@@ -21,11 +21,11 @@ public class Amount {
         this.value = value;
     }
 
-    public String getCurrency() {
-        return currency;
+    public CurrencyCode getCurrencyCode() {
+        return currencyCode;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setCurrencyCode(CurrencyCode currencyCode) {
+        this.currencyCode = currencyCode;
     }
 }
