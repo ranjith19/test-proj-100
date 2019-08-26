@@ -59,11 +59,16 @@ public class FetchCustomerBillsResponse {
     }
 
 
-    public String convertToJson() throws JsonProcessingException {
+    public String convertToJson() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        return  mapper.writeValueAsString(this);
+        try{
+            return  mapper.writeValueAsString(this);
+        }
+        catch (JsonProcessingException ex){
+            return "{}";
+        }
     }
 }
