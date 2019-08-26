@@ -1,8 +1,15 @@
 package com.setu.serializer.SetuSerializer;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 
-public class Bill {
+public class SetuBill {
     BillAggregates billAggregates;
     BillExactness billExactness;
     ZonedDateTime billGeneratedOn;
@@ -12,14 +19,27 @@ public class Bill {
     Recurrence recurrence;
     Item[] items;
 
-    public Bill(BillAggregates billAggregates, BillExactness billExactness, ZonedDateTime billGeneratedOn,
-                String billerBillID, CustomerAccount customerAccount, Recurrence recurrence) {
+    public SetuBill(BillAggregates billAggregates, BillExactness billExactness, ZonedDateTime billGeneratedOn,
+                    String billerBillID, CustomerAccount customerAccount, Recurrence recurrence) {
         this.billAggregates = billAggregates;
         this.billExactness = billExactness;
         this.billGeneratedOn = billGeneratedOn;
         this.billerBillID = billerBillID;
         this.customerAccount = customerAccount;
         this.recurrence = recurrence;
+    }
+
+    public SetuBill(int amount, String billID, String customerAccountID) {
+        AmountWithName total = new AmountWithName(new Amount(amount), "Total outstanding");
+        ZoneId zoneId = ZoneId.of( "UTC" );
+        ZonedDateTime genDate = LocalDateTime.now().atZone(zoneId);
+        BillAggregates billAggregates = new BillAggregates(total);
+        CustomerAccount customerAccount = new CustomerAccount(customerAccountID);
+        this.billAggregates = billAggregates;
+        this.billExactness = BillExactness.EXACT;
+        this.billGeneratedOn = genDate;
+        this.billerBillID = billID;
+        this.customerAccount = customerAccount;
     }
 
     public ZonedDateTime getBillDueDate() {
@@ -85,5 +105,13 @@ public class Bill {
 
     public void setItems(Item[] items) {
         this.items = items;
+    }
+
+    String convertToJson() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        return  mapper.writeValueAsString(this);
     }
 }

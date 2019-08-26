@@ -21,11 +21,11 @@ public class BillSerializer {
 
         String billId = "bill10122";
 
-        Bill bill = new Bill(billAggregates, BillExactness.EXACT_UP, genDate, billId, customerAccount,
+        SetuBill bill = new SetuBill(billAggregates, BillExactness.EXACT_UP, genDate, billId, customerAccount,
                 Recurrence.MONTHLY);
         bill.setBillDueDate(dueDate);
 
-        Bill[] bills = new Bill[1];
+        SetuBill[] bills = new SetuBill[1];
         bills[0] = bill;
 
         BillDetails billDetails = new BillDetails(BillFetchStatus.AVAILABLE, bills);
@@ -57,9 +57,18 @@ public class BillSerializer {
         item1.setFees(itemFees);
         billAggregates.setBillFees(billFees);
         bill.setItems(items);
+        System.out.println("#########--------");
+        System.out.println(bill.convertToJson());
+        System.out.println("#########--------");
+
         jsonStr = fcbResponse.convertToJson();
         System.out.println("#########");
         System.out.println(jsonStr);
+        System.out.println("#########");
+
+        FetchCustomerBillsResponse fcbResponse2 = new FetchCustomerBillsResponse(10000, "19990", "Ranjith BR", "10000");
+        System.out.println("#########");
+        System.out.println(fcbResponse2.convertToJson());
         System.out.println("#########");
 
     }
