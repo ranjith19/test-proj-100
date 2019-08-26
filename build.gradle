@@ -4,7 +4,7 @@ plugins {
 	id "com.github.johnrengelman.shadow" version "5.0.0"
 }
 group = 'com.setu.serializer'
-version = '0.0.2-SNAPSHOT'
+version = '0.0.3b'
 sourceCompatibility = '1.8'
 
 repositories {
