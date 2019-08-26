@@ -40,6 +40,7 @@ public class SetuBill {
         this.billGeneratedOn = genDate;
         this.billerBillID = billID;
         this.customerAccount = customerAccount;
+        this.recurrence = Recurrence.ONE_TIME;
     }
 
     public ZonedDateTime getBillDueDate() {

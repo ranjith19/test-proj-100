@@ -4,7 +4,7 @@ plugins {
 	id "com.github.johnrengelman.shadow" version "5.0.0"
 }
 group = 'com.setu.serializer'
-version = '0.0.3b'
+version = '0.0.4b'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -18,6 +18,4 @@ dependencies {
 	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.9'
 // https://mvnrepository.com/artifact/com.github.jengelman.gradle.plugins/shadow
 	compile group: 'com.github.jengelman.gradle.plugins', name: 'shadow', version: '2.0.1'
-
-
 }
